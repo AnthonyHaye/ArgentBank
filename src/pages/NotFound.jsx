@@ -1,11 +1,10 @@
-import FeatureItem from '../components/FeatureItem'
-import Header from '../components/Header'
+import { Link } from 'react-router-dom'
 import Footer from '../components/Footer'
-import constants from '../constants'
-import '../stylesheet/pages/home.css'
+import Header from '../components/Header'
 
-const Home = () => {
-  const { features } = constants
+import '../stylesheet/pages/notfound.css'
+
+const NotFound = () => {
   return (
     <>
       <Header />
@@ -21,20 +20,15 @@ const Home = () => {
             </p>
           </section>
         </div>
-        <section className="features">
-          <h2 className="sr-only">Features</h2>
-          {features.map((feat, index) => (
-            <FeatureItem
-              key={index}
-              icon={feat.icon}
-              title={feat.title}
-              desc={feat.desc}
-            />
-          ))}
-        </section>
+        <div className="notfound_content">
+          <h1>404</h1>
+          <h2>Oups! La page que vous demandez n&apos;existe pas.</h2>
+          <Link to="/">Retourner sur la page d’accueil</Link>
+        </div>
       </main>
       <Footer />
     </>
   )
 }
-export default Home
+
+export default NotFound
