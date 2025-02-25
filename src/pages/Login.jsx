@@ -34,8 +34,6 @@ const Login = () => {
 
                 try{
                         const response = await loginUser(email,password)
-                        console.log('Login Response : ', response);
-
                         //accès au token depuis response.body
                         const { token } = response.body;
                         if (!token){

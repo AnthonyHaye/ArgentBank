@@ -22,6 +22,7 @@ const Profile = () => {
         const {token} = useSelector((state)=> state.auth)
         const {user} = useSelector((state) => state.profile)        
         const [isEditing, setIsEditing] = useState(false);
+        const [hasChanges, setHasChanges] = useState(false);
         const [firstname, setFirstname] = useState(user?.firstName || '');
         const [lastname, setLastname] = useState(user?.lastName || '');
         const [error, setError] = useState('');
@@ -41,6 +42,7 @@ const Profile = () => {
          */
         const handleCancelClick = () => {
         setIsEditing(false);
+        setHasChanges(false);
         setFirstname(user?.firstName || '');
         setLastname(user?.lastName || '');
         };
@@ -57,20 +59,16 @@ const Profile = () => {
                 setSuccess('');
 
                 try{
-                        //const token = localstorage.getItem;
-                        console.log('Retrieved Token', token)
-
                         if(!token){
                                 throw new Error('Token manquant pour la mise à jour du profil')
                         }
                         const updatedData = { firstName: firstname, lastName: lastname}
-                        console.log("upsdate Data:", updatedData)
-                        const updatedUser = await updateUserData(token, updatedData)
-                        console.log("updatedUser :",updatedUser)
+                        const updatedUser = await updateUserData(updatedData)
 
                         dispatch(updateUserProfile(updatedUser.body));
                         setSuccess('Profil à jour')
                         setIsEditing(false);
+                        setHasChanges(false);
                 } catch (err) {
                         console.error('Update Profile Error :' ,err);
                         setError('Erreur lors de la mise à jour du profil utilisateur')
@@ -91,7 +89,10 @@ const Profile = () => {
                                                                 label=""
                                                                 type="text"
                                                                 value={firstname}
-                                                                onChange={(e) => setFirstname(e.target.value)}
+                                                                onChange={(e) => {
+                                                                        setFirstname(e.target.value);
+                                                                        setHasChanges(true);
+                                                                    }}
                                                                 placeholder={user?.firstName || 'Prénom'}
                                                                 autoComplete="given-name"                                                    
                                                         />
@@ -100,15 +101,20 @@ const Profile = () => {
                                                                 label=""
                                                                 type="text"
                                                                 value={lastname}
-                                                                onChange={(e) => setLastname(e.target.value)}
+                                                                onChange={(e) => {
+                                                                        setLastname(e.target.value);
+                                                                        setHasChanges(true);
+                                                                    }}
                                                                 placeholder={user?.lastName || 'Nom'}
                                                                 autoComplete="family-name"
                                                         />                                                        
                                                 </div>
-                                                <div className='form-buttons'>
-                                                        <button type="submit" className='save-button'>Save</button>
-                                                        <button className="cancel-button" type="button" onClick={handleCancelClick} >Cancel</button>
-                                                </div>
+                                                {hasChanges && (
+                                                                        <div className='form-buttons'>
+                                                                                <button type="submit" className='save-button'>Save</button>
+                                                                                <button className="cancel-button" type="button" onClick={handleCancelClick}>Cancel</button>
+                                                                        </div>
+                                                                )}
                                                 {error && <p className="error-message">{error}</p>}
                                                 {success && <p className="success-message">{success}</p>}
 

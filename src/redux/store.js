@@ -14,7 +14,27 @@ export const store = configureStore({
   },
 })
 
-const token = localStorage.getItem('autorisationToken')
+const token = sessionStorage.getItem('autorisationToken')
+
+if (token && !store.getState().profile.user) {
+  // Vérifie si les données utilisateur sont déjà chargées
+  fetch('http://localhost:3001/api/v1/user/profile', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((user) => {
+      store.dispatch(login({ token }))
+      store.dispatch({ type: 'profile/fetchProfileSuccess', payload: user })
+    })
+    .catch((error) => {
+      console.error('Erreur récupération profil:', error)
+      store.dispatch(logout())
+    })
+}
 
 /**
  * Si un token est présent, il est utilisé pour récupérer les détails de l'utilisateur.

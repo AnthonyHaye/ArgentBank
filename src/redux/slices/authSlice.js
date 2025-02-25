@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 /**
  * État initial du slice d'authentification.
- * Récupère le token d'authentification depuis localStorage s'il est disponible, sinon l'initialise à null.
+ * Récupère le token d'authentification depuis sessionStorage s'il est disponible, sinon l'initialise à null.
  * @type {Object}
  * @property {string|null} token - Le token d'authentification de l'utilisateur, ou null s'il n'y en a pas.
  * @property {boolean} isAuthenticated - Indique si l'utilisateur est authentifié (true si un token est présent).
@@ -11,8 +11,8 @@ import { createSlice } from '@reduxjs/toolkit'
  */
 
 const initialState = {
-  token: localStorage.getItem('autorisationToken') || null,
-  isAuthenticated: !!localStorage.getItem('autorisationToken'),
+  token: sessionStorage.getItem('autorisationToken') || null,
+  isAuthenticated: !!sessionStorage.getItem('autorisationToken'),
   error: null,
 }
 
@@ -37,18 +37,17 @@ export const authSlice = createSlice({
      * @param {Object} action.payload.user - Les informations de l'utilisateur.
      */
     login: (state, { payload }) => {
-      console.log('Payload reçu :', payload)
       //stocker les données de l'utilisateur dans l'état
       const { token, user } = payload
       //mettre à jour l'état pour indiquer que l'utilisateur est authentifié et token enregistré
       state.token = token
       state.isAuthenticated = true
       state.user = user
-      //stocke le token dans localStorage pour persister la session
-      localStorage.setItem('autorisationToken', token)
+      //stocke le token dans sessionStorage pour persister la session
+      sessionStorage.setItem('autorisationToken', token)
     },
     /**
-     * Déconnecte un utilisateur en réinitialisant l'état et en supprimant le token de localStorage.
+     * Déconnecte un utilisateur en réinitialisant l'état et en supprimant le token de sessionStorage.
      * @param {Object} state - L'état actuel du slice.
      */
     logout: (state) => {
@@ -56,8 +55,8 @@ export const authSlice = createSlice({
       state.token = null
       state.isAuthenticated = false
       state.user = null
-      //supprime le token du localStorage pour déconnecter l'utilisateur
-      localStorage.removeItem('autorisationToken')
+      //supprime le token du sessionStorage pour déconnecter l'utilisateur
+      sessionStorage.removeItem('autorisationToken')
     },
   },
 })
