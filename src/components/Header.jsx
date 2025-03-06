@@ -1,43 +1,40 @@
-import AbLogo from '../assets/img/argentBankLogo.png'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../redux/slices/authSlice'
-import { FaUserCircle } from 'react-icons/fa'
-import { IoLogOut } from 'react-icons/io5'
+import AbLogo from '../assets/img/argentBankLogo.png';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGetProfileQuery } from '../redux/services/api'; // 🔹 On utilise directement RTK Query
+import { FaUserCircle } from 'react-icons/fa';
+import { IoLogOut } from 'react-icons/io5';
 
-import '../stylesheet/components/header.css'
+import '../stylesheet/components/header.css';
+import React from 'react';
 
-const Header = () => {
-  //connecte le header au store
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  //récupération des infos d'authentification depuis Redux
-  const { isAuthenticated } = useSelector((state) => state.auth)
-  const { user } = useSelector((state) => state.profile) || {}
-  console.log(user?.name)
+const HeaderComponent = () => {
+  const navigate = useNavigate();
 
-  //déconnexion
+  // Vérifier si un token est présent pour lancer la requête
+  const token = localStorage.getItem("autorisationToken") || sessionStorage.getItem("autorisationToken");
+
+  // 🔹 Récupération du profil utilisateur via RTK Query
+  const { data: profile, isLoading, isError } = useGetProfileQuery(undefined, { skip: !token });
+
+  // 🔹 Déconnexion : Suppression du token et redirection
   const handleLogout = () => {
-    dispatch(logout())
-    navigate('/')
-  }
+    localStorage.removeItem("autorisationToken");
+    sessionStorage.removeItem("autorisationToken");
+    navigate('/');
+  };
 
   return (
     <nav className="main-nav">
       <Link to="/" className="main-nav-logo">
-        <img
-          src={AbLogo}
-          alt="argent Bank Logo"
-          className="main-nav-logo-image"
-        />
+        <img src={AbLogo} alt="Argent Bank Logo" className="main-nav-logo-image" />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
       <div className="main-nav-items">
-        {isAuthenticated ? (
+        {token && !isLoading && !isError ? ( // 🔹 Si un token existe et que la requête est terminée
           <div className="user_loggedin">
             <div className="user_avatar">
               <FaUserCircle />
-              <p>{user?.firstName || 'User'}</p>
+              <p>{profile?.firstName || 'User'}</p> {/* 🔹 Utilise RTK Query pour récupérer le prénom */}
             </div>
             <button
               onClick={handleLogout}
@@ -56,7 +53,9 @@ const Header = () => {
         )}
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default Header
+const Header = React.memo(HeaderComponent);
+
+export default Header;

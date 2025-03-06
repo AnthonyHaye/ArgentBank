@@ -1,3 +1,7 @@
+console.time('Chargement de authSlice.js')
+console.log('3️⃣ authSlice.js chargé')
+console.timeEnd('Chargement de authSlice.js')
+
 import { createSlice } from '@reduxjs/toolkit'
 
 /**

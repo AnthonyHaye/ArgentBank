@@ -1,3 +1,7 @@
+console.clear(); // 🔥 Efface la console pour bien voir l'ordre
+console.time("Chargement du main.js"); // 🔥 Démarre un timer
+console.log("1️⃣ main.js chargé");
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import AppRouter from './router/AppRouter.jsx'
@@ -12,3 +16,4 @@ createRoot(document.getElementById('root')).render(
     </Provider>
   </StrictMode>,
 )
+

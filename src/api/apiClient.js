@@ -5,7 +5,7 @@ import { logout } from '../redux/slices/authSlice'
 
 const API_URL = 'http://localhost:3001/api/v1'
 
-const api = axios.create({
+const apiClient = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -13,9 +13,9 @@ const api = axios.create({
 })
 
 // Intercepteur pour ajouter le token à chaque requête
-api.interceptors.request.use(
+apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('autorisationToken')
+    const token = sessionStorage.getItem('autorisationToken')
     if (token) {
       config.headers.Authorization = `Bearer ${token}`
     }
@@ -25,7 +25,7 @@ api.interceptors.request.use(
 )
 
 // Intercepteur pour gérer les erreurs d'authentification
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (
@@ -39,4 +39,4 @@ api.interceptors.response.use(
   }
 )
 
-export default api
+export default apiClient

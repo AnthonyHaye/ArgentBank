@@ -32,6 +32,7 @@ export const profileSlice = createSlice({
      */
     fetchProfileSuccess: (state, { payload }) => {
       state.user = payload
+      console.log('user : ', state.user)
       state.loading = false
     },
     /**
