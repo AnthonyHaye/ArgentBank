@@ -1,9 +1,17 @@
-import { Link } from 'react-router-dom'
-import Footer from '../components/Footer'
-import Header from '../components/Header'
+/**
+ * @file Composant de la page 404 Not Found.
+ * Affiche un message d'erreur lorsque l'utilisateur tente d'accéder à une page inexistante.
+ */
 
-import '../stylesheet/pages/notfound.css'
+import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import '../stylesheet/pages/notfound.css';
 
+/**
+ * Composant de la page Not Found (404).
+ * @returns {JSX.Element} - Page d'erreur 404 avec un lien vers l'accueil.
+ */
 const NotFound = () => {
   return (
     <>
@@ -28,7 +36,7 @@ const NotFound = () => {
       </main>
       <Footer />
     </>
-  )
-}
+  );
+};
 
-export default NotFound
+export default NotFound;

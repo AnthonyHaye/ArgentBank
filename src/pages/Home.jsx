@@ -1,11 +1,21 @@
-import FeatureItem from '../components/FeatureItem'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import constants from '../constants'
-import '../stylesheet/pages/home.css'
+/**
+ * @file Composant de la page d'accueil.
+ * Présente les fonctionnalités et avantages de l'application.
+ */
 
+import FeatureItem from '../components/FeatureItem';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import constants from '../constants';
+import '../stylesheet/pages/home.css';
+
+/**
+ * Composant représentant la page d'accueil de l'application.
+ * @returns {JSX.Element} - Page d'accueil avec présentation des fonctionnalités.
+ */
 const Home = () => {
-  const { features } = constants
+  const { features } = constants;
+  
   return (
     <>
       <Header />
@@ -35,6 +45,7 @@ const Home = () => {
       </main>
       <Footer />
     </>
-  )
-}
-export default Home
+  );
+};
+
+export default Home;

@@ -1,3 +1,8 @@
+/**
+ * @file Composant de la page de profil utilisateur.
+ * Permet d'afficher et de modifier les informations du profil.
+ */
+
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetProfileQuery, useUpdateProfileMutation } from "../redux/services/api";
@@ -9,22 +14,22 @@ import Input from "../components/Input";
 import Header from "../components/Header";
 import "../stylesheet/pages/userprofile.css";
 
+/**
+ * Composant représentant la page de profil utilisateur.
+ * @returns {JSX.Element} Composant de la page de profil.
+ */
 const Profile = () => {
     const navigate = useNavigate();
     const { data: profile, error, isLoading, refetch } = useGetProfileQuery();
     const [updateProfile] = useUpdateProfileMutation();
-
-    // 🔹 États pour le formulaire
     const [isEditing, setIsEditing] = useState(false);
     const [hasChanges, setHasChanges] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
     const [success, setSuccess] = useState('');
-
     const { account } = constants;
 
-    // 🔹 Met à jour le formulaire quand profile change
     useEffect(() => {
         if (profile) {
             setFirstname(profile.firstName);
@@ -32,7 +37,7 @@ const Profile = () => {
         }
     }, [profile]);
 
-    // 🔹 Rediriger vers /notfound en cas d'erreur
+    // 🔹 Redirige vers /notfound en cas d'erreur de chargement du profil
     useEffect(() => {
         if (error) {
             console.error("Erreur de chargement du profil, redirection vers NotFound.");
@@ -40,12 +45,16 @@ const Profile = () => {
         }
     }, [error, navigate]);
 
-    // 🔹 Active le mode édition
+    /**
+     * Active le mode édition du profil.
+     */
     const handleEditClick = useCallback(() => {
         setIsEditing(true);
     }, []);
 
-    // 🔹 Annule les modifications et réinitialise les valeurs
+    /**
+     * Annule les modifications et réinitialise les valeurs du profil.
+     */
     const handleCancelClick = useCallback(() => {
         setIsEditing(false);
         setHasChanges(false);
@@ -53,7 +62,10 @@ const Profile = () => {
         setLastname(profile?.lastName || '');
     }, [profile]);
 
-    // 🔹 Gère la mise à jour du profil utilisateur
+    /**
+     * Envoie la mise à jour du profil utilisateur.
+     * @param {Event} e - Événement du formulaire de mise à jour.
+     */
     const handleUpdateProfile = useCallback(async (e) => {
         e.preventDefault();
         setErrorMsg('');
@@ -67,7 +79,6 @@ const Profile = () => {
             setIsEditing(false);
             setHasChanges(false);
 
-            // 🔹 Rafraîchir le profil après mise à jour
             refetch();
         } catch (err) {
             console.error('Erreur mise à jour du profil :', err);

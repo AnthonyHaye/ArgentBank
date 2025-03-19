@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="">
-    <img src="./src/assets/argentBankLogo.png" alt="Logo" width="200">
+    <img src="./src/assets/img/argentBankLogo.png" alt="Logo" width="200">
   </a>
 </div>
 
@@ -40,6 +40,7 @@ Un contrat en deux parties qui se décompose en plusieurs phases :
 
 - **Documentation complète** avec un ReadMe, **JSDoc**, et des **PropTypes** pour une meilleure collaboration au sein de l'équipe.
 - Interface utilisateur réactive et intuitive.
+- L'application utilise Redux Toolkit (RTK) pour gérer l'état de manière efficace et optimisée, facilitant ainsi la gestion des données utilisateur et des transactions.
 
 ### Concernant la Phase 2 : Gestion des transactions via l'API
 
@@ -62,10 +63,12 @@ Ces endpoints sont documentés dans **Swagger** pour permettre une exploration f
 
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
-[![Redux](https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux.js.org/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux%20Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)](https://swagger.io/)
+[![JSDoc](https://img.shields.io/badge/JSDoc-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://jsdoc.app/)
+
 
 ## Installation
 
