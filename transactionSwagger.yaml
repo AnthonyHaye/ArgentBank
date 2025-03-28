@@ -79,34 +79,6 @@ paths:
         '500':
           description: "Server error while retrieving transactions"
 
-  /transactions/current-month:
-    get:
-      summary: "Retrieve all transactions for the current month, grouped by account"
-      parameters:
-        - in: query
-          name: accountId
-          type: string
-          description: "Filter by account ID"
-        - in: query
-          name: category
-          type: string
-          description: "Filter by category"
-        - in: query
-          name: type
-          type: string
-          description: "Filter by transaction type"
-      responses:
-        '200':
-          description: "List of transactions for the current month"
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Transaction'
-        '401':
-          description: "Unauthorized. User must be authenticated."
-        '500':
-          description: "Server error while retrieving transactions"
-
   /transactions/details/{transactionId}:
     get:
       summary: "Retrieve details of a specific transaction"
@@ -128,58 +100,7 @@ paths:
         '500':
           description: "Server error while retrieving transaction details"
 
-  /transactions/new-transaction:
-    post:
-      summary: "Create a new transaction"
-      parameters:
-        - in: body
-          name: transaction
-          required: true
-          schema:
-            type: object
-            properties:
-              accountId:
-                type: string
-                description: "ID of the associated account"
-              amount:
-                type: number
-                format: float
-                description: "Amount of the transaction (required)"
-              date:
-                type: string
-                format: date
-                description: "Date of the transaction (required)"
-              description:
-                type: string
-                description: "Description of the transaction (required)"
-              type:
-                type: string
-                description: "Type of transaction (e.g., electronic) (required)"
-              category:
-                type: string
-                description: "Category of the transaction"
-              note:
-                type: string
-                description: "User-added note for the transaction"
-            required:
-              - accountId
-              - amount
-              - date
-              - description
-              - type
-      responses:
-        '201':
-          description: "Transaction successfully created"
-          schema:
-            $ref: '#/definitions/Transaction'
-        '400':
-          description: "Invalid data provided for the transaction"
-        '401':
-          description: "Unauthorized. User must be authenticated."
-        '500':
-          description: "Server error while creating the transaction"
-
-  /transactions/update/{transactionId}:
+  /transactions/{transactionId}:
     put:
       summary: "Update modifiable information of a specific transaction (category and notes only)"
       description: |
